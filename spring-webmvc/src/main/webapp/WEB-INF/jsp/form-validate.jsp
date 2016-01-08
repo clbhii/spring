@@ -9,10 +9,10 @@
 </head>
 <body>
 
-<form:form action="add" method="post" modelAttribute="user">
-    id:<form:input path="id"/><form:errors path="id"/><br>
-    name:<form:input path="name"/><form:errors path="name"/><br>
-    birth:<form:input path="birth"/><form:errors path="birth"/>
+<form:form action="add" method="post" modelAttribute="person">
+    id:<form:input path="user.id"/><form:errors path="user.id"/><br>
+    name:<form:input path="user.name"/><form:errors path="user.name"/><br>
+    birth:<form:input path="user.birth"/><form:errors path="user.birth"/>
     <input type="submit" value="submit">
 </form:form>
 

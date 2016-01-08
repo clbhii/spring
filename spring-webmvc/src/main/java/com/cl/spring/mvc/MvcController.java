@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping("/mvc")
@@ -59,7 +61,7 @@ public class MvcController {
 	 * @return
 	 */
 	@RequestMapping("/person1")
-	public String toPerson(Person p) {
+	public String toPerson(Person p,User user) {
 		System.out.println(p.getName() + " " + p.getAge());
 		return "hello";
 	}
@@ -85,7 +87,10 @@ public class MvcController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
 	}
 
-	// *********************向前台传递参数*************************
+	// *********************向前台传递参数**************************
+	//Spring MVC 提供Model、ModelMap、Map让我们可以直接添加渲染视图需要的模型数据，
+	//在返回时直接指定对应视图名称就可以了。同时Map是继承于ModelMap的，
+	//而Model和ModelMap是继承于ExtendedModelMap的。
 
 	@RequestMapping("/show")
 	public String showPerson(Map<String, Object> map) {
@@ -95,6 +100,18 @@ public class MvcController {
 		p.setName("jayjay");
 		return "show";
 	}
+	
+	@RequestMapping(value="/show1")
+	public ModelAndView showPerson1(){
+		Person p = new Person();
+		p.setAge(201);
+		p.setName("jayjay1");
+	    ModelAndView modelAndView = new ModelAndView();  
+	    modelAndView.addObject("p", p);  
+	    modelAndView.setViewName("show");  
+	    return modelAndView;
+	}
+	
 
 	// *********************ajax调用*************************
 
@@ -221,7 +238,7 @@ public class MvcController {
     // *********************表单的验证（使用Hibernate-validate） *************************
        
     @RequestMapping(value="/add",method=RequestMethod.POST)    
-    public String add(@Valid User u,BindingResult br){
+    public String add(@Valid Person u,BindingResult br){
         if(br.getErrorCount()>0){            
             return "form-validate";
         }
@@ -230,14 +247,23 @@ public class MvcController {
      
     @RequestMapping(value="/add",method=RequestMethod.GET)
     public String add(Map<String,Object> map){
-        map.put("user",new User());
+        map.put("person",new Person());
         return "form-validate";
     }
     
+    
+    
     // *********************国际化 *************************
+    //优先级
+    //Content-Language:en-US 
+    //本地（window zh_CN）
+    //默认的
     
     @RequestMapping("/locale")
-    public String locale(){
+    public String locale(HttpServletRequest request,Model model){
+    	 //从后台代码获取国际化信息
+    	RequestContext requestContext = new RequestContext(request);
+        model.addAttribute("username", requestContext.getMessage("username"));
         return "locale";
     }
     

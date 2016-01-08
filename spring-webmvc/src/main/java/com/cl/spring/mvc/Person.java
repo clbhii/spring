@@ -17,6 +17,15 @@ public class Person {
 		this.age = age;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	private String name;
 	private int age;
+	private User user;
 }
