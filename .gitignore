@@ -42,6 +42,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 .metadata
+.recommenders
 RemoteSystemsTempFiles
 spring-context/.classpath
 spring-context/.project
@@ -51,4 +52,10 @@ spring-webmvc/.classpath
 spring-webmvc/.project
 spring-webmvc/.settings
 spring-webmvc/target
+mybatis/mybatis-3
+
+cl-mybatis/.classpath
+cl-mybatis/.project
+cl-mybatis/.settings
+cl-mybatis/target
 *.class

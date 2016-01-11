@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cl.mybatis.UserMapper">
+
+	<resultMap id="baseResultMap" type="com.cl.mybatis.User">
+		<id property="id" column="id" />
+		<result property="userName" column="user_name" typeHandler="com.cl.mybatis.EmptyStringIfNull"/>
+		<result property="userAge" column="userAge"  />
+	</resultMap>
+
+	<select id="selectOne" parameterType="int" resultMap="baseResultMap" >
+		select * from cl_user where id = #{id}
+	</select>
+	
+	<select id="selectByCriterial" parameterType="java.util.Map" resultType="java.util.Map" >
+		select * from cl_user 
+	</select>
+	
+	<insert id="insertOne" parameterType="com.cl.mybatis.User" useGeneratedKeys="true" keyProperty="id">
+		insert into cl_user(user_name,
+		user_age) values(
+		#{userName},#{userAge}
+		)
+
+	</insert>
+	<insert id="insertList" parameterType="com.cl.mybatis.User" useGeneratedKeys="true" keyProperty="id">
+		insert into cl_user(user_name, user_age) values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.userName},#{item.userAge}
+			)
+		</foreach>
+
+
+	</insert>
+</mapper>
