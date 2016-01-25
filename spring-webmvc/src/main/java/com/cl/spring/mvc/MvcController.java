@@ -128,6 +128,11 @@ public class MvcController {
 	    return "redirect:hello";
 	}
 	
+	@RequestMapping("/forword")
+	public String forword(){
+	    return "forward:hello";
+	}
+	
 	// *********************文件上传*************************
 	
 	@RequestMapping("/form")
@@ -194,16 +199,22 @@ public class MvcController {
         return u;
     }
     
+    @RequestMapping("/map")
+	@ResponseBody
+	public String business(HttpServletRequest req, Map<Object, Object> map) {
+    	return "success";
+    }
+    
     // *********************异常处理*************************
     
     //局部异常
-//    @ExceptionHandler
-//    public ModelAndView exceptionHandler(Exception ex){
-//        ModelAndView mv = new ModelAndView("error");
-//        mv.addObject("exception", ex);
-//        System.out.println("in testExceptionHandler");       
-//        return mv;
-//    }
+    @ExceptionHandler
+    public ModelAndView exceptionHandler(Exception ex){
+        ModelAndView mv = new ModelAndView("error");
+        mv.addObject("exception", ex);
+        System.out.println("in testExceptionHandler");       
+        return mv;
+    }
         
     @RequestMapping("/error")
     public String error(){
