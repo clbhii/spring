@@ -24,7 +24,14 @@
 		<!-- 后缀 -->
 		<property name="suffix" value=".jsp" />
 	</bean>
-
+	<!-- 全局异常 -->
+	<bean class="com.cl.spring.mvc.SpringMVCSimpleMappingExceptionResolver">
+	    <property name="exceptionMappings">
+	        <props>
+	            <prop key="java.lang.Exception">error</prop>
+	        </props>
+	    </property>
+	</bean>
 
 	<!-- upload settings -->
 	<bean id="multipartResolver"

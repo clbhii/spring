@@ -208,14 +208,14 @@ public class MvcController {
     // *********************异常处理*************************
     
     //局部异常
-    @ExceptionHandler
-    public ModelAndView exceptionHandler(Exception ex){
-        ModelAndView mv = new ModelAndView("error");
-        mv.addObject("exception", ex);
-        System.out.println("in testExceptionHandler");       
-        return mv;
-    }
-        
+//    @ExceptionHandler
+//    public ModelAndView exceptionHandler(Exception ex){
+//        ModelAndView mv = new ModelAndView("error");
+//        mv.addObject("exception", ex);
+//        System.out.println("in testExceptionHandler");       
+//        return mv;
+//    }
+//        
     @RequestMapping("/error")
     public String error(){
         int i = 5/0;
@@ -234,17 +234,17 @@ public class MvcController {
 		    </property>
 		</bean>
      */
-    @ControllerAdvice
-    public static class testControllerAdvice {
-    	
-        @ExceptionHandler
-        public ModelAndView exceptionHandler(Exception ex){
-            ModelAndView mv = new ModelAndView("error");
-            mv.addObject("exception", ex);
-            System.out.println("in testControllerAdvice");
-            return mv;
-        }
-    }
+//    @ControllerAdvice
+//    public static class testControllerAdvice {
+//    	
+//        @ExceptionHandler
+//        public ModelAndView exceptionHandler(Exception ex){
+//            ModelAndView mv = new ModelAndView("error");
+//            mv.addObject("exception", ex);
+//            System.out.println("in testControllerAdvice");
+//            return mv;
+//        }
+//    }
     
     // *********************表单的验证（使用Hibernate-validate） *************************
        
