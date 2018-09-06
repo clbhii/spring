@@ -48,9 +48,9 @@ public class Test {
 	public static void main(String[] args) {
 		Test test = new Test();
 //		test.applicationContext();
-//		test.applicationContext_autowire();
+		test.applicationContext_autowire();
 //		test.applicationContext1();
-		test.applicationContext1_parent();
+//		test.applicationContext1_parent();
 
 	}
 

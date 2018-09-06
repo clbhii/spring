@@ -14,5 +14,5 @@
 			autowire="autodetect">
 	</bean>
 
-	
+	<bean id="applicationContextHelper" class="com.cl.spring.ioc.service.ApplicationContextHelper"></bean>
 </beans>
