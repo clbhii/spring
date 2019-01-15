@@ -15,7 +15,10 @@ import org.springframework.statemachine.config.builders.StateMachineStateConfigu
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
 import org.springframework.statemachine.listener.StateMachineListener;
 import org.springframework.statemachine.listener.StateMachineListenerAdapter;
+import org.springframework.statemachine.state.State;
 import org.springframework.statemachine.transition.Transition;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  * 订单状态机配置
@@ -73,20 +76,29 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
         return new StateMachineListenerAdapter<States, Events>() {
 
             @Override
+			public void stateChanged(State<States, Events> from, State<States, Events> to) {
+            	logger.info("触发stateChanged={}, target={}", from == null ? "": from.getId(), to == null ? "": to.getId());
+			}
+
+			@Override
             public void transition(Transition<States, Events> transition) {
-                if(transition.getTarget().getId() == States.UNPAID) {
+            	State<States, Events> source = transition.getSource();
+            	State<States, Events> target = transition.getTarget();
+            	logger.info("触发transition:source={}, target={}", 
+            			source == null ? "": source.getId(), target == null ? "": target.getId());
+                if(target.getId() == States.UNPAID) {
                     logger.info("订单创建，待支付");
                     return;
                 }
 
-                if(transition.getSource().getId() == States.UNPAID
-                        && transition.getTarget().getId() == States.WAITING_FOR_RECEIVE) {
+                if(source.getId() == States.UNPAID
+                        && target.getId() == States.WAITING_FOR_RECEIVE) {
                     logger.info("用户完成支付，待收货");
                     return;
                 }
 
-                if(transition.getSource().getId() == States.WAITING_FOR_RECEIVE
-                        && transition.getTarget().getId() == States.DONE) {
+                if(source.getId() == States.WAITING_FOR_RECEIVE
+                        && target.getId() == States.DONE) {
                     logger.info("用户已收货，订单完成");
                     return;
                 }
