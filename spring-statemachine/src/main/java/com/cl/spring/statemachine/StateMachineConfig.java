@@ -13,12 +13,11 @@ import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter
 import org.springframework.statemachine.config.builders.StateMachineConfigurationConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
+import org.springframework.statemachine.guard.Guard;
 import org.springframework.statemachine.listener.StateMachineListener;
 import org.springframework.statemachine.listener.StateMachineListenerAdapter;
 import org.springframework.statemachine.state.State;
 import org.springframework.statemachine.transition.Transition;
-
-import com.alibaba.fastjson.JSON;
 
 /**
  * 订单状态机配置
@@ -35,6 +34,15 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
         states
             .withStates()
                 .initial(States.UNPAID)   
+                .state(States.WAITING_FOR_RECEIVE, new Action<States, Events>() {
+					public void execute(StateContext<States, Events> context) {
+						logger.info("doAction entry state");
+					}
+				}, new Action<States, Events>() {
+					public void execute(StateContext<States, Events> context) {
+						logger.info("doAction exit state");
+					}
+				})
                 .states(EnumSet.allOf(States.class));
     }
 
@@ -46,6 +54,8 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
                 .source(States.UNPAID).target(States.WAITING_FOR_RECEIVE)
                 .event(Events.PAY)
                 .action(action())
+//                .action(actionException(), errorAction())
+                .guard(guard())
                 .and()
             .withExternal()
                 .source(States.WAITING_FOR_RECEIVE).target(States.DONE)
@@ -53,12 +63,45 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     }
 
     @Bean
+    public Guard<States, Events> guard() {
+        return new Guard<States, Events>() {
+
+            @Override
+            public boolean evaluate(StateContext<States, Events> context) {
+            	logger.info("Guard");
+                return true;
+            }
+        };
+    }
+    @Bean
     public Action<States, Events> action() {
         return new Action<States, Events>() {
 
             @Override
             public void execute(StateContext<States, Events> context) {
             	logger.info("doAction");
+            }
+        };
+    }
+    @Bean
+    public Action<States, Events> actionException() {
+        return new Action<States, Events>() {
+
+            @Override
+            public void execute(StateContext<States, Events> context) {
+                throw new RuntimeException("MyError");
+            }
+        };
+    }
+    @Bean
+    public Action<States, Events> errorAction() {
+        return new Action<States, Events>() {
+
+            @Override
+            public void execute(StateContext<States, Events> context) {
+                // RuntimeException("MyError") added to context
+                Exception exception = context.getException();
+                exception.getMessage();
             }
         };
     }

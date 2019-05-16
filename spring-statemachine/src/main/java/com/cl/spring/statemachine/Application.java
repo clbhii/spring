@@ -15,7 +15,7 @@ private Logger logger = LoggerFactory.getLogger(getClass());
   public static void main(String[] args) {
 	  AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 	  context.register(StateMachineConfig.class);
-	  context.register(EventConfig.class);
+//	  context.register(EventConfig.class);
 	  context.register(Application.class);
 	  context.refresh();
 	  Application application = context.getBean(Application.class);
