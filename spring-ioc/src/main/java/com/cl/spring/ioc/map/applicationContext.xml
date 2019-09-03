@@ -28,4 +28,22 @@
 	<util:map id="testMap1">
 		<entry key="11" value="11"></entry>
 	</util:map>
+	
+	<util:map id="testMapLsit">
+		<entry key="11" value-ref="testList"></entry>
+	</util:map>
+	
+	<util:map id="testMapLsit2">
+		<entry key="11">
+			<util:list >
+				<value>11</value>
+				<value>22</value>
+			</util:list>
+		</entry>
+	</util:map>
+	
+	<util:list id="testList" >
+		<value>11</value>
+		<value>33</value>
+	</util:list>
 </beans>
