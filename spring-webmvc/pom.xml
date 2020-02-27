@@ -6,6 +6,7 @@
 	<version>0.0.1</version>
 	<packaging>war</packaging>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<springframework.version>4.1.6.RELEASE</springframework.version>
 		<fastjson.version>1.2.6</fastjson.version>
 		<dubbo.version>2.5.3</dubbo.version>
@@ -83,12 +84,14 @@
 		<finalName>spring</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
-				<version>1.1</version>
+				<!-- https://www.jb51.net/article/143054.htm-->
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
 				<configuration>
-					<charset>${project.build.sourceEncoding}</charset>
-					<port>8090</port>
+					<server>tomcat7</server>
+					<!--<path>/ads</path>-->
+					<port>8080</port>
 					<path>/spring</path>
 					<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
 					<!-- <warSourceDirectory>target/${project.build.finalName} </warSourceDirectory> -->
