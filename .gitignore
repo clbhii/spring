@@ -61,3 +61,7 @@ cl-mybatis/target
 *.class
 
 ip-filter-master
+build
+.idea
+.gradle
+gradle
