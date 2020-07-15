@@ -48,10 +48,10 @@ spring-context/.classpath
 spring-context/.project
 spring-context/.settings
 spring-context/target
-spring-webmvc/.classpath
-spring-webmvc/.project
-spring-webmvc/.settings
-spring-webmvc/target
+.classpath
+.project
+.settings
+target
 mybatis/mybatis-3
 
 cl-mybatis/.classpath
