@@ -1,5 +1,7 @@
 package com.cl.spring.mvc;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Person {
 	public String getName() {
 		return name;
@@ -24,7 +26,7 @@ public class Person {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	@NotEmpty
 	private String name;
 	private int age;
 	private User user;
