@@ -1,0 +1,9 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+    servlet:
+      content-type: text/html
+    mode: HTML5
+
+

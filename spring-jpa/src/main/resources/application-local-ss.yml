@@ -1,0 +1,10 @@
+spring:
+  datasource: #数据库相关
+    druid:
+      url: jdbc:sqlserver://localhost:1433;DatabaseName=jpa
+      username: sa
+      password: sa
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.SQLServer2008Dialect
